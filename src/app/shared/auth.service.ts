@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {User} from "../assignments/user.model";
+import {User} from "../assignments/model/user.model";
 import {catchError, map, Observable, tap} from "rxjs";
-import {Assignment} from "../assignments/assignment.model";
+import {Assignment} from "../assignments/model/assignment.model";
 @Injectable({
   providedIn: 'root'
 })
@@ -17,20 +17,6 @@ export class AuthService {
       mdp : "andry",
       admin : true,
     },
-    {
-      _id : "aaze3",
-      iduser : 2,
-      pseudo : "itu",
-      mdp : "itu",
-      admin : false,
-    },
-    {
-      _id : "aaz2",
-      iduser : 3,
-      pseudo : "itu2",
-      mdp : "itu2",
-      admin : false,
-    }
   ];
 
   constructor(private http:HttpClient) { }
@@ -50,12 +36,12 @@ export class AuthService {
   }
 
   isConnected() {
-    let isUserAdmin = new Promise((resolve, reject) => {
+    let User = new Promise((resolve, reject) => {
       resolve(this.loggedIn);
     });
 
     //return this.loggedIn;
-    return isUserAdmin;
+    return User;
   }
 
   // isAdmin().then(admin => { if(admin) { console.log("L'utilisateur est administrateur"); }})

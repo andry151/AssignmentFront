@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssignmentsService } from 'src/app/shared/assignments.service';
 import { AuthService } from 'src/app/shared/auth.service';
-import { Assignment } from '../assignment.model';
+import { Assignment } from '../model/assignment.model';
 
 @Component({
   selector: 'app-assignment-detail',
@@ -52,11 +52,17 @@ export class AssignmentDetailComponent implements OnInit {
   }
 
   onDelete() {
+    console.log("mande");
     if (!this.assignmentTransmis) return;
+    console.log("mande2");
     if(this.authService.user){
-      if (!this.authService.user.admin) this.message ="vous n'êtes pas admin, vous n'êtes pas autorisé à supprimer";
-      return;
+      if (!this.authService.user.admin) {
+        this.message ="vous n'êtes pas admin, vous n'êtes pas autorisé à supprimer";
+        return;
+      }
+
     }
+    console.log("mande3");
 
     this.assignmentsService
       .deleteAssignment(this.assignmentTransmis)
@@ -68,9 +74,12 @@ export class AssignmentDetailComponent implements OnInit {
   }
 
   onClickEdit() {
+    console.log("mande");
     if(this.authService.user){
-      if (!this.authService.user.admin) this.message ="vous n'êtes pas admin, vous n'êtes pas autorisé à modifier";
-      return;
+      if (!this.authService.user.admin) {
+        this.message ="vous n'êtes pas admin, vous n'êtes pas autorisé à modifier";
+        return;
+      }
     }
     this.router.navigate(['/assignment', this.assignmentTransmis?.id, 'edit'], {
       queryParams: {

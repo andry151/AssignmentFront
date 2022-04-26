@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, filter, forkJoin, map, Observable, of, pairwise, tap } from 'rxjs';
-import { Assignment } from '../assignments/assignment.model';
+import { Assignment } from '../assignments/model/assignment.model';
 import { LoggingService } from './logging.service';
 import { bdInitialAssignments } from './data';
+import {Matiere} from "../assignments/model/matiere.model";
+import {Prof} from "../assignments/model/prof.model";
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +13,52 @@ import { bdInitialAssignments } from './data';
 
 export class AssignmentsService {
   assignments:Assignment[] = [];
+  matieres:Matiere[] = [
+    {
+      idmatiere:1,
+      nom:"Base de données",
+      image:"",
+      prof:{
+        idprof:1,
+        nom:"Buffa",
+        prenom:"Grinn",
+        photo:"",
+      }
+    },
+    {
+      idmatiere:1,
+      nom:"Technologies Web",
+      image:"",
+      prof:{
+        idprof:1,
+        nom:"Buffa",
+        prenom:"Grinn",
+        photo:"",
+      }
+    },
+    {
+      idmatiere:1,
+      nom:"Grails",
+      image:"",
+      prof:{
+        idprof:1,
+        nom:"Sammy",
+        prenom:"Grinn",
+        photo:"",
+      }
+    },
+    {
+      idmatiere:1,
+      nom:"SQL3",
+      image:"",
+      prof:{
+        idprof:1,
+        nom:"Mopollo",
+        prenom:"Grinn",
+        photo:"",
+      }
+    }
+  ];
 
   constructor(private loggingService:LoggingService, private http:HttpClient) {
     this.loggingService.setNiveauTrace(2);
@@ -72,10 +120,12 @@ export class AssignmentsService {
   }
 
   deleteAssignment(assignment:Assignment):Observable<any> {
+    console.log("mande tsara");
     //let pos = this.assignments.indexOf(assignment);
     //this.assignments.splice(pos, 1);
 
-    this.loggingService.log(assignment.nom, "supprimé");
+    //this.loggingService.log(assignment.nom, "supprimé");
+
 
     //return of("Assignment supprimé");
     return this.http.delete(this.url + "/" + assignment._id);

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../shared/auth.service";
 import {Router} from "@angular/router";
-import {User} from "../user.model";
+import {User} from "../model/user.model";
 
 @Component({
   selector: 'app-login-user',
@@ -16,7 +16,15 @@ export class LoginUserComponent implements OnInit {
   constructor(private authservice:AuthService, private router: Router) { }
 
   ngOnInit(): void {
+    var a:User = new User ();
+    a._id="aaz";
+    a.iduser=1;
+    a.pseudo="andry";
+    a.mdp="andry";
+    a.admin=true;
+    this.authservice.user=a;
 
+    this.authservice.loggedIn=true;
   }
 
   seConnecter (){
