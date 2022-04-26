@@ -4,12 +4,30 @@
     <mat-form-field>
       <input matInput placeholder="Edition du nom" [(ngModel)]="nomAssignment" name="assignment-name">
     </mat-form-field>
+
     <mat-form-field>
       <input matInput [matDatepicker]="picker" placeholder="Edition de la date" [(ngModel)]="dateDeRendu" name="date">
       <mat-datepicker-toggle matSuffix [for]="picker">
       </mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Nom de l'élève" [(ngModel)]="auteur" name="assignment-auteur">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Changer Note" [(ngModel)]="note" name="assignment-note">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Remarques" [(ngModel)]="remarques" name="assignment-remarques">
+    </mat-form-field>
+
+    <select [(ngModel)]="matiere" name="matiere">
+      <option *ngFor="let mat of matieres" [ngValue]="mat" >{{mat.nom}} (Prof : {{mat.prof.nom}} {{mat.prof.prenom}} )</option>
+    </select>
+
     <button mat-raised-button color="primary" [disabled]="((!nomAssignment)||(!dateDeRendu))">
       Sauver
     </button>
