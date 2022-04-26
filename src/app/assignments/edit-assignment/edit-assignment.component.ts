@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssignmentsService } from 'src/app/shared/assignments.service';
 import { Assignment } from '../assignment.model';
+import {AuthService} from "../../shared/auth.service";
 
 @Component({
   selector: 'app-edit-assignment',
@@ -16,10 +17,12 @@ export class EditAssignmentComponent implements OnInit {
   constructor(
     private assignmentsService: AssignmentsService,
     private route: ActivatedRoute,
+    private authService : AuthService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
+
     // ici un exemple de récupération des query params et du fragment
     let queryParams = this.route.snapshot.queryParams;
     console.log("Query params :")

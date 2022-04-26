@@ -3,6 +3,8 @@ import { AfterViewInit, Component, NgZone, OnInit, ViewChild} from '@angular/cor
 import { filter, map, pairwise, tap, throttleTime } from 'rxjs';
 import { AssignmentsService } from '../shared/assignments.service';
 import { Assignment } from './assignment.model';
+import {AuthService} from "../shared/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-assignments',
@@ -23,7 +25,7 @@ export class AssignmentsComponent implements OnInit, AfterViewInit {
   prevPage= 1;
   nextPage= 2;
 
-  constructor(private assignmentsService:AssignmentsService, private ngZone: NgZone) {}
+  constructor(private assignmentsService:AssignmentsService, private ngZone: NgZone, private authService : AuthService, private router: Router) {}
 
   @ViewChild('scroller') scroller!: CdkVirtualScrollViewport;
 
@@ -130,5 +132,14 @@ export class AssignmentsComponent implements OnInit, AfterViewInit {
   dernierePage() {
     this.page = this.totalPages;
     this.getAssignments();
+  }
+
+  onLogout() {
+    if (this.authService.loggedIn) {
+      console.log('je me deloggue');
+      this.authService.logOut();
+      // et je navigue vers la page d'accueil
+      this.router.navigate(['/login']);
+    }
   }
 }

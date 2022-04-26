@@ -17,18 +17,6 @@ export class AppComponent {
     private assignmentsService: AssignmentsService
   ) {}
 
-  onLoginLogout() {
-    if (this.authService.loggedIn) {
-      console.log('je me deloggue');
-      this.authService.logOut();
-      // et je navigue vers la page d'accueil
-      this.router.navigate(['/home']);
-    } else {
-      console.log('je me loggue');
-      this.authService.logIn('michel', 'monpassword');
-    }
-  }
-
   isLogged() {
     return this.authService.loggedIn;
   }

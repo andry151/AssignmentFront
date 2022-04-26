@@ -1,4 +1,9 @@
 <main class="container">
+
+    <button mat-flat-button color="accent" class="ajouterBtn" (click)="onLogout()">
+      Déco
+    </button>
+
   <a routerLink="/add" class="ajouterBtn">
     <button mat-flat-button color="accent">
       Ajouter Assignment
@@ -56,7 +61,7 @@
 <cdk-virtual-scroll-viewport itemSize="150" class="example-viewport" #scroller>
   <mat-list *cdkVirtualFor="let assignment of assignments" class="example-item">
     <nav>
-      <a href="/assignment/{{assignment.id}}">
+      <a routerLink="/assignment/{{assignment.id}}">
         <h3 mat-subheader>{{assignment.dateDeRendu | date:"dd/MM/yy"}}</h3>
         <mat-list-item>
           <p *ngIf="assignment.rendu; else nonsoumis" appRendu>

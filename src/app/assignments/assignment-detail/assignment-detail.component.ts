@@ -11,6 +11,7 @@ import { Assignment } from '../assignment.model';
 })
 export class AssignmentDetailComponent implements OnInit {
   assignmentTransmis?: Assignment;
+  message?: string;
 
   constructor(
     private assignmentsService: AssignmentsService,
@@ -20,10 +21,12 @@ export class AssignmentDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log("user = "+this.authService.user?.pseudo);
     // on va récupérer l'id dans l'URL,
     // le + permet de forcer en number (au lieu de string)
     const id = +this.route.snapshot.params['id'];
     this.getAssignment(id);
+
   }
 
   getAssignment(id: number) {
@@ -50,6 +53,10 @@ export class AssignmentDetailComponent implements OnInit {
 
   onDelete() {
     if (!this.assignmentTransmis) return;
+    if(this.authService.user){
+      if (!this.authService.user.admin) this.message ="vous n'êtes pas admin, vous n'êtes pas autorisé à supprimer";
+      return;
+    }
 
     this.assignmentsService
       .deleteAssignment(this.assignmentTransmis)
@@ -61,6 +68,10 @@ export class AssignmentDetailComponent implements OnInit {
   }
 
   onClickEdit() {
+    if(this.authService.user){
+      if (!this.authService.user.admin) this.message ="vous n'êtes pas admin, vous n'êtes pas autorisé à modifier";
+      return;
+    }
     this.router.navigate(['/assignment', this.assignmentTransmis?.id, 'edit'], {
       queryParams: {
         name: 'Michel Buffa',

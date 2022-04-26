@@ -1,3 +1,5 @@
+<p *ngIf="message">{{message}}</p>
+
 <mat-card *ngIf="assignmentTransmis">
   <mat-card-title>{{assignmentTransmis.nom}}</mat-card-title>
   <mat-card-subtitle>{{assignmentTransmis.dateDeRendu | date:"dd/MM/yy"}}</mat-card-subtitle>

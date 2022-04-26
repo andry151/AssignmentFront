@@ -29,23 +29,33 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
 
 import { EditAssignmentComponent } from './assignments/edit-assignment/edit-assignment.component';
 import { AuthGuard } from './shared/auth.guard';
+import { LoginUserComponent } from './assignments/login-user/login-user.component';
+
 
 const routes:Routes = [
   {
     path:"",
-    component: AssignmentsComponent
+    component: AssignmentsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path:"home",
-    component: AssignmentsComponent
+    component: AssignmentsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path:"login",
+    component: LoginUserComponent,
   },
   {
     path:"add",
-    component: AddAssignmentComponent
+    component: AddAssignmentComponent,
+    canActivate: [AuthGuard]
   },
   {
     path:"assignment/:id",
-    component: AssignmentDetailComponent
+    component: AssignmentDetailComponent,
+    canActivate: [AuthGuard]
   },
   {
     path:"assignment/:id/edit",
@@ -61,7 +71,8 @@ const routes:Routes = [
     NonRenduDirective,
     AssignmentDetailComponent,
     AddAssignmentComponent,
-    EditAssignmentComponent
+    EditAssignmentComponent,
+    LoginUserComponent
   ],
   imports: [
     BrowserModule, FormsModule,
