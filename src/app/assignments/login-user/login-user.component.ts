@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../shared/auth.service";
 import {Router} from "@angular/router";
+import {User} from "../user.model";
 
 @Component({
   selector: 'app-login-user',
@@ -15,19 +16,26 @@ export class LoginUserComponent implements OnInit {
   constructor(private authservice:AuthService, private router: Router) { }
 
   ngOnInit(): void {
+
   }
 
   seConnecter (){
+    console.log("Loggin : "+this.authservice.loggedIn);
     if(!this.pseudo || !this.mdp) {
       this.erreur="Des champs sont nuls";
       return ;
     }
-    this.authservice.logIn(this.mdp,this.mdp);
-    if(this.authservice.loggedIn){
-      this.router.navigate(['/home']);
-      return ;
-    }else{
-      this.erreur="login incorrect";
-    }
+
+    this.authservice.getUsers().subscribe( reponse => {
+      for(var val of reponse) {
+        if(val.pseudo===this.pseudo && val.mdp===this.mdp){
+          this.authservice.user = val;
+          this.authservice.loggedIn=true;
+          this.router.navigate(['/home'])
+        }
+      }
+      this.erreur="login incorrect ";
+    });
   }
+
 }

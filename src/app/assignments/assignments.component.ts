@@ -5,6 +5,7 @@ import { AssignmentsService } from '../shared/assignments.service';
 import { Assignment } from './assignment.model';
 import {AuthService} from "../shared/auth.service";
 import {Router} from "@angular/router";
+import {User} from "./user.model";
 
 @Component({
   selector: 'app-assignments',
@@ -14,6 +15,7 @@ import {Router} from "@angular/router";
 export class AssignmentsComponent implements OnInit, AfterViewInit {
   assignments:Assignment[] = [];
   displayedColumns: string[] = ['id', 'nom', 'dateDeRendu', 'rendu'];
+  user?:User;
 
   // pagination
   page=1;
@@ -70,6 +72,7 @@ export class AssignmentsComponent implements OnInit, AfterViewInit {
   // appelé après le constructeur et AVANT l'affichage du composant
   ngOnInit(): void {
     console.log("Dans ngOnInit, appelé avant l'affichage");
+    this.user=this.authService.user;
     this.getAssignments();
   }
 

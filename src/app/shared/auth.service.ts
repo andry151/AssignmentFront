@@ -1,5 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {User} from "../assignments/user.model";
+import {catchError, map, Observable, tap} from "rxjs";
+import {Assignment} from "../assignments/assignment.model";
 @Injectable({
   providedIn: 'root'
 })
@@ -30,18 +33,10 @@ export class AuthService {
     }
   ];
 
-  logIn(login:string, password:string) {
-    // normalement il faudrait envoyer une requête sur un web service, passer le login et le password
-    for (var val of this.users) {
-      if(val.pseudo===login && val.mdp===password){
-        this.user = val;
-        this.loggedIn = true;
-      }
-    }
-    // et recevoir un token d'authentification, etc. etc.
+  constructor(private http:HttpClient) { }
 
-    // pour le moment, si on appelle cette méthode, on ne vérifie rien et on se loggue
-
+  getUsers():Observable<User[]> {
+    return this.http.get<User[]>("http://localhost:8010/api/users");
   }
 
   logOut() {
@@ -65,5 +60,5 @@ export class AuthService {
 
   // isAdmin().then(admin => { if(admin) { console.log("L'utilisateur est administrateur"); }})
 
-  constructor() { }
+
 }

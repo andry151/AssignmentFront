@@ -1,4 +1,11 @@
 <main class="container">
+  <div *ngIf="user">
+    <h3>User connecté</h3>
+    <p >{{user.iduser}}</p>
+    <p >{{user.pseudo}}</p>
+    <p >{{user.mdp}}</p>
+    <p >{{user.admin}}</p>
+  </div>
 
     <button mat-flat-button color="accent" class="ajouterBtn" (click)="onLogout()">
       Déco

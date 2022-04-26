@@ -1,6 +1,7 @@
 <p *ngIf="erreur">{{erreur}}</p>
 <form (submit)="seConnecter(); ">
-  <input type="text" name="pseudo" [(ngModel)]="pseudo"/>
-  <input type="password" name="mdp" [(ngModel)]="mdp" />
+  <input value="text" type="text" name="pseudo" [(ngModel)]="pseudo"/>
+  <input value="text" type="password" name="mdp" [(ngModel)]="mdp" />
   <button>Ok</button>
 </form>
+
