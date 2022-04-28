@@ -3,7 +3,7 @@
   <mat-card-title-group>
     <mat-card-title>{{assignmentTransmis.nom}} ({{assignmentTransmis.matiere.nom}}) : {{assignmentTransmis.matiere.prof.nom}}</mat-card-title>
     <mat-card-subtitle>{{assignmentTransmis.dateDeRendu | date:"dd/MM/yy"}}</mat-card-subtitle>
-    <img mat-card-sm-image class="img-profil" src="{{assignmentTransmis.matiere.prof.photog}}" >
+    <img mat-card-sm-image class="img-profil" src="{{assignmentTransmis.matiere.prof.photo}}" >
   </mat-card-title-group>
 
   <mat-error class="erreur" *ngIf="message">
