@@ -17,34 +17,34 @@ export class AssignmentsService {
     {
       idmatiere:1,
       nom:"Base de données",
-      image:"",
+      image:"https://miro.medium.com/max/1100/1*dYhDHdCt0lhVRdj0IjrI7A.png",
       prof:{
         idprof:1,
         nom:"Buffa",
         prenom:"Grinn",
-        photo:"",
+        photo:"https://material.angular.io/assets/img/examples/shiba2.jpg",
       }
     },
     {
       idmatiere:2,
       nom:"Technologies Web",
-      image:"",
+      image:"https://miro.medium.com/max/1100/1*dYhDHdCt0lhVRdj0IjrI7A.png",
       prof:{
         idprof:2,
         nom:"Buffa",
         prenom:"Grinn",
-        photo:"",
+        photo:"https://material.angular.io/assets/img/examples/shiba2.jpg",
       }
     },
     {
       idmatiere:3,
       nom:"Grails",
-      image:"",
+      image:"https://miro.medium.com/max/1100/1*dYhDHdCt0lhVRdj0IjrI7A.png",
       prof:{
         idprof:3,
         nom:"Sammy",
         prenom:"Grinn",
-        photo:"",
+        photo:"https://material.angular.io/assets/img/examples/shiba2.jpg",
       }
     },
     {

@@ -1,9 +1,9 @@
 <mat-card class="example-card" *ngIf="assignmentTransmis">
-  <img mat-card-image class="bann-img" src="https://miro.medium.com/max/1100/1*dYhDHdCt0lhVRdj0IjrI7A.png" alt="Photo of a Shiba Inu">
+  <img mat-card-image class="bann-img" src="{{assignmentTransmis.matiere.image}}">
   <mat-card-title-group>
     <mat-card-title>{{assignmentTransmis.nom}} ({{assignmentTransmis.matiere.nom}}) : {{assignmentTransmis.matiere.prof.nom}}</mat-card-title>
     <mat-card-subtitle>{{assignmentTransmis.dateDeRendu | date:"dd/MM/yy"}}</mat-card-subtitle>
-    <img mat-card-sm-image class="img-profil" src="https://material.angular.io/assets/img/examples/shiba2.jpg" >
+    <img mat-card-sm-image class="img-profil" src="{{assignmentTransmis.matiere.prof.photog}}" >
   </mat-card-title-group>
 
   <mat-error class="erreur" *ngIf="message">
