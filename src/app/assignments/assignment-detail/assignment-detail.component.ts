@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AssignmentsService } from 'src/app/shared/assignments.service';
 import { AuthService } from 'src/app/shared/auth.service';
 import { Assignment } from '../model/assignment.model';
+import {User} from "../model/user.model";
 
 @Component({
   selector: 'app-assignment-detail',
@@ -12,6 +13,7 @@ import { Assignment } from '../model/assignment.model';
 export class AssignmentDetailComponent implements OnInit {
   assignmentTransmis?: Assignment;
   message?: string;
+  user= this.authService.user;
 
   constructor(
     private assignmentsService: AssignmentsService,
@@ -92,5 +94,10 @@ export class AssignmentDetailComponent implements OnInit {
 
   isLoggedIn() {
     return this.authService.loggedIn;
+  }
+
+  testAdmin(){
+    if(this.user) return this.user.admin;
+    else return false;
   }
 }

@@ -1,11 +1,39 @@
-<p *ngIf="message">{{message}}</p>
+<mat-card class="example-card" *ngIf="assignmentTransmis">
+  <img mat-card-image class="bann-img" src="https://miro.medium.com/max/1100/1*dYhDHdCt0lhVRdj0IjrI7A.png" alt="Photo of a Shiba Inu">
+  <mat-card-title-group>
+    <mat-card-title>{{assignmentTransmis.nom}} ({{assignmentTransmis.matiere.nom}}) : {{assignmentTransmis.matiere.prof.nom}}</mat-card-title>
+    <mat-card-subtitle>{{assignmentTransmis.dateDeRendu | date:"dd/MM/yy"}}</mat-card-subtitle>
+    <img mat-card-sm-image class="img-profil" src="https://material.angular.io/assets/img/examples/shiba2.jpg" >
+  </mat-card-title-group>
 
-<mat-card *ngIf="assignmentTransmis">
-  <mat-card-title>{{assignmentTransmis.nom}}</mat-card-title>
-  <mat-card-subtitle>{{assignmentTransmis.dateDeRendu | date:"dd/MM/yy"}}</mat-card-subtitle>
-  <div id="bottom">
-    <mat-checkbox *ngIf="!assignmentTransmis.rendu" (click)="onAssignmentRendu()">Rendu</mat-checkbox>
-    <button mat-stroked-button color="primary" (click)="onClickEdit()" [disabled]="!isLoggedIn()">EDIT</button>
-    <button mat-raised-button color="warn" (click)="onDelete()" [disabled]="!isLoggedIn()">DELETE</button>
-  </div>
+  <mat-error class="erreur" *ngIf="message">
+    <strong>Erreur :</strong> {{message}}
+  </mat-error>
+
+  <mat-card-content>
+    <p>
+      <strong>Elève : </strong>{{assignmentTransmis.auteur}}
+    </p>
+    <p>
+      <strong>Note : </strong> <span *ngIf="assignmentTransmis.note; else nr">{{assignmentTransmis.note}}</span><ng-template #nr>Pas encore de note</ng-template>
+    </p>
+    <p>
+      <strong>Rendu : </strong> <span *ngIf="assignmentTransmis.rendu; else rendu">Devoir rendu</span><ng-template #rendu>Pas encore rendu</ng-template>
+    </p>
+    <p>
+      <strong>Ajouté par : </strong>
+      <span *ngIf="!testAdmin(); else testadmin"  id="adminTest">Seule l'admin peut voir qui a créé ce devoir</span>
+      <ng-template #testadmin>Andry</ng-template>
+    </p>
+    <p>
+      <strong>Remarques : </strong>
+      <span *ngIf="assignmentTransmis.remarques; else remarq">{{assignmentTransmis.remarques}}</span><ng-template #remarq>Pas de remarques</ng-template>
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <div id="bottom">
+      <button mat-stroked-button color="primary" (click)="onClickEdit()" [disabled]="!isLoggedIn()">EDIT</button>
+      <button mat-raised-button color="warn" (click)="onDelete()" [disabled]="!isLoggedIn()">DELETE</button>
+    </div>
+  </mat-card-actions>
 </mat-card>

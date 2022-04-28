@@ -26,36 +26,36 @@ export class AssignmentsService {
       }
     },
     {
-      idmatiere:1,
+      idmatiere:2,
       nom:"Technologies Web",
       image:"",
       prof:{
-        idprof:1,
+        idprof:2,
         nom:"Buffa",
         prenom:"Grinn",
         photo:"",
       }
     },
     {
-      idmatiere:1,
+      idmatiere:3,
       nom:"Grails",
       image:"",
       prof:{
-        idprof:1,
+        idprof:3,
         nom:"Sammy",
         prenom:"Grinn",
         photo:"",
       }
     },
     {
-      idmatiere:1,
-      nom:"SQL3",
-      image:"",
+      idmatiere:3,
+      nom:"Oracle",
+      image:"https://mma.prnewswire.com/media/467598/Oracle_Logo.jpg?p=twitter",
       prof:{
-        idprof:1,
+        idprof:3,
         nom:"Mopollo",
         prenom:"Grinn",
-        photo:"",
+        photo:"https://univ-cotedazur.fr/medias/photo/rs9100-buffa-michel-scr_1623769953324-jpg?ID_FICHE=1094906",
       }
     }
   ];
@@ -84,7 +84,8 @@ export class AssignmentsService {
     return this.http.get<Assignment>(`${this.url}/${id}`)
     .pipe(
       map(a => {
-        a.nom = a.nom + " MODIFIE PAR UN MAP AVANT DE L'ENVOYER AU COMPOSANT D'AFFICHAGE";
+        //a.nom = a.nom + " MODIFIE PAR UN MAP AVANT DE L'ENVOYER AU COMPOSANT D'AFFICHAGE";
+        a.nom = a.nom ;
         return a;
       }),
       tap(a => {

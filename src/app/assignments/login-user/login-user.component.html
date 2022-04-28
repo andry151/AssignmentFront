@@ -1,7 +1,24 @@
-<p *ngIf="erreur">{{erreur}}</p>
-<form (submit)="seConnecter(); ">
-  <input value="text" type="text" name="pseudo" [(ngModel)]="pseudo"/>
-  <input value="text" type="password" name="mdp" [(ngModel)]="mdp" />
-  <button>Ok</button>
-</form>
+<mat-card>
+  <mat-card-content>
+    <form (submit)="seConnecter(); ">
+      <h2>Se connecter</h2>
 
+      <mat-card *ngIf="erreur">
+        <mat-error>
+          {{erreur}}
+        </mat-error>
+      </mat-card>
+
+      <mat-form-field>
+        <input matInput [(ngModel)]="pseudo" placeholder="Pseudo" name="pseudo" required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="password" [(ngModel)]="mdp" placeholder="Mot de passe" name="mdp" required>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" >Login</button>
+
+    </form>
+  </mat-card-content>
+</mat-card>

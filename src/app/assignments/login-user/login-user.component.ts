@@ -9,22 +9,13 @@ import {User} from "../model/user.model";
   styleUrls: ['./login-user.component.css']
 })
 export class LoginUserComponent implements OnInit {
-  pseudo?:string;
-  mdp?:string;
+  pseudo:string = "andry";
+  mdp:string = "andry";
   erreur?:string;
 
   constructor(private authservice:AuthService, private router: Router) { }
 
   ngOnInit(): void {
-    var a:User = new User ();
-    a._id="aaz";
-    a.iduser=1;
-    a.pseudo="andry";
-    a.mdp="andry";
-    a.admin=true;
-    this.authservice.user=a;
-
-    this.authservice.loggedIn=true;
   }
 
   seConnecter (){
