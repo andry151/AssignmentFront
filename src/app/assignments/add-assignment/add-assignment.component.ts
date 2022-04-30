@@ -23,7 +23,10 @@ export class AddAssignmentComponent implements OnInit {
   constructor(private assignmentsService:AssignmentsService, private router:Router , private authService : AuthService) {}
 
   ngOnInit(): void {
-    this.matieres = this.assignmentsService.matieres;
+    this.assignmentsService.getMatieres().subscribe( reponse => {
+      this.matieres = reponse;
+    });
+
   }
 
   onSubmit() {

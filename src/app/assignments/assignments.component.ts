@@ -68,7 +68,7 @@ export class AssignmentsComponent implements OnInit, AfterViewInit {
             this.assignmentsNonRendu.push(ass);
           }
         }
-        this.nbassignment=this.assignments.length;
+        this.nbassignment=reponse.totalDocs;
       });
 
   }

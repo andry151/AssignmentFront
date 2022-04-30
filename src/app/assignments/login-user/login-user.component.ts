@@ -12,8 +12,6 @@ import {AssignmentsService} from "../../shared/assignments.service";
 export class LoginUserComponent implements OnInit {
   pseudo?:string ;
   mdp?:string ;
-  /*pseudo:string="ituadmin" ;
-  mdp:string="ituadmin" ;*/
   erreur?:string;
 
   constructor(private authservice:AuthService, private router: Router,private route: ActivatedRoute, private ass: AssignmentsService) { }

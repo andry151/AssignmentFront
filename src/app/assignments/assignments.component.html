@@ -62,7 +62,7 @@
                 <strong>Note : </strong> <span *ngIf="aRendu.note; else nr">{{aRendu.note}}</span><ng-template #nr>Pas encore de note</ng-template>
               </p>
               <p>
-                <strong>Rendu : </strong> <span *ngIf="aRendu.rendu; else rendu">Devoir rendu</span><ng-template #rendu>Pas encore rendu</ng-template>
+                <strong>Statut : </strong> <span *ngIf="aRendu.rendu; else rendu">Devoir rendu</span><ng-template #rendu>Pas encore rendu</ng-template>
               </p>
 
               <mat-card-actions>

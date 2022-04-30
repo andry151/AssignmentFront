@@ -29,13 +29,9 @@ export class EditAssignmentComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.matieres = this.assignmentsService.matieres;
-    // ici un exemple de récupération des query params et du fragment
-    /*let queryParams = this.route.snapshot.queryParams;
-    console.log("Query params :")
-    console.log(queryParams);
-    console.log("Fragment :")
-    console.log(this.route.snapshot.fragment);*/
+    this.assignmentsService.getMatieres().subscribe( reponse => {
+      this.matieres = reponse;
+    });
 
     this.getAssignment();
   }
