@@ -30,6 +30,11 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
 import { EditAssignmentComponent } from './assignments/edit-assignment/edit-assignment.component';
 import { AuthGuard } from './shared/auth.guard';
 import { LoginUserComponent } from './assignments/login-user/login-user.component';
+import { CommonModule } from '@angular/common';
+import {MatSelectModule} from '@angular/material/select';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 const routes:Routes = [
@@ -79,7 +84,8 @@ const routes:Routes = [
     BrowserAnimationsModule, MatButtonModule, MatIconModule, MatDividerModule,
     MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule,
     MatListModule, MatCardModule, MatCheckboxModule, MatSlideToggleModule, MatTableModule,
-    RouterModule.forRoot(routes), HttpClientModule, ScrollingModule
+    RouterModule.forRoot(routes), HttpClientModule, ScrollingModule, CommonModule , MatSelectModule,
+    MatToolbarModule, MatPaginatorModule , MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

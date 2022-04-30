@@ -10,6 +10,7 @@ import { AuthService } from './shared/auth.service';
 })
 export class AppComponent {
   titre = 'Application de gestion des assignments...';
+  user = this.authService.user;
 
   constructor(
     private authService: AuthService,
@@ -32,5 +33,18 @@ export class AppComponent {
       // Marche plus avec la dernière version d’angular
       this.router.navigate(['/home'], { replaceUrl: true });
     });
+  }
+
+  onAdd(){
+    this.router.navigate(['/add'], { replaceUrl: true });
+  }
+
+  onHome(){
+    this.router.navigate(['/home'], { replaceUrl: true });
+  }
+
+  onLogout(){
+    this.authService.logOut();
+    this.router.navigate(['/login'], { replaceUrl: true });
   }
 }

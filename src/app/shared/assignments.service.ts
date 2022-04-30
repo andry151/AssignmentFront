@@ -20,8 +20,8 @@ export class AssignmentsService {
       image:"https://miro.medium.com/max/1100/1*dYhDHdCt0lhVRdj0IjrI7A.png",
       prof:{
         idprof:1,
+        sexe:"Mr",
         nom:"Buffa",
-        prenom:"Grinn",
         photo:"https://material.angular.io/assets/img/examples/shiba2.jpg",
       }
     },
@@ -31,8 +31,8 @@ export class AssignmentsService {
       image:"https://miro.medium.com/max/1100/1*dYhDHdCt0lhVRdj0IjrI7A.png",
       prof:{
         idprof:2,
+        sexe:"Mr",
         nom:"Buffa",
-        prenom:"Grinn",
         photo:"https://material.angular.io/assets/img/examples/shiba2.jpg",
       }
     },
@@ -42,8 +42,8 @@ export class AssignmentsService {
       image:"https://miro.medium.com/max/1100/1*dYhDHdCt0lhVRdj0IjrI7A.png",
       prof:{
         idprof:3,
+        sexe:"Mr",
         nom:"Sammy",
-        prenom:"Grinn",
         photo:"https://material.angular.io/assets/img/examples/shiba2.jpg",
       }
     },
@@ -53,8 +53,8 @@ export class AssignmentsService {
       image:"https://mma.prnewswire.com/media/467598/Oracle_Logo.jpg?p=twitter",
       prof:{
         idprof:3,
+        sexe:"Mr",
         nom:"Mopollo",
-        prenom:"Grinn",
         photo:"https://univ-cotedazur.fr/medias/photo/rs9100-buffa-michel-scr_1623769953324-jpg?ID_FICHE=1094906",
       }
     }
@@ -64,7 +64,6 @@ export class AssignmentsService {
     this.loggingService.setNiveauTrace(2);
 
   }
-
 
   url = "http://localhost:8010/api/assignments";
   //url= "https://mbdsmadagascar2022api.herokuapp.com/api/assignments";
@@ -78,7 +77,7 @@ export class AssignmentsService {
     return this.http.get<Assignment[]>(this.url + "?page=" + page + "&limit=" + limit);
   }
 
-  getAssignment(id:number):Observable<Assignment|undefined> {
+  getAssignment(id:string):Observable<Assignment|undefined> {
     //let a = this.assignments.find(a => a.id === id);
     //return of(a);
     return this.http.get<Assignment>(`${this.url}/${id}`)
@@ -99,35 +98,24 @@ export class AssignmentsService {
     return (error: any): Observable<T> => {
       console.log(error); // pour afficher dans la console
       console.log(operation + ' a échoué ' + error.message);
-
       return of(result as T);
     }
   }
 
   addAssignment(assignment:Assignment):Observable<any> {
-   // this.assignments.push(assignment);
-
     this.loggingService.log(assignment.nom, "ajouté");
-
     return this.http.post<Assignment>(this.url, assignment);
-
-    //return of("Assignment ajouté");
   }
 
   updateAssignment(assignment:Assignment):Observable<any> {
     this.loggingService.log(assignment.nom, "modifié");
-
     return this.http.put<Assignment>(this.url, assignment);
   }
 
   deleteAssignment(assignment:Assignment):Observable<any> {
-    console.log("mande tsara");
     //let pos = this.assignments.indexOf(assignment);
     //this.assignments.splice(pos, 1);
-
     //this.loggingService.log(assignment.nom, "supprimé");
-
-
     //return of("Assignment supprimé");
     return this.http.delete(this.url + "/" + assignment._id);
   }

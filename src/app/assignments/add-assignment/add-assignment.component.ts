@@ -19,7 +19,7 @@ export class AddAssignmentComponent implements OnInit {
   remarques!: string ;
   matiere!:Matiere;
   matieres!:Matiere[];
-
+  erreur?:string;
   constructor(private assignmentsService:AssignmentsService, private router:Router , private authService : AuthService) {}
 
   ngOnInit(): void {
@@ -32,6 +32,31 @@ export class AddAssignmentComponent implements OnInit {
       'nom = ' + this.nomAssignment + ' date de rendu = ' + this.dateDeRendu
     );
 
+    if(this.note<0){
+      this.erreur ="La note doit être supérieur à 0";
+      return;
+    }
+    if(this.note>20){
+      this.erreur ="La note doit être inférieur à 20";
+      return;
+    }
+    if(!this.nomAssignment){
+      this.erreur ="Le devoir doit avoir un nom";
+      return ;
+    }
+    if(!this.auteur){
+      this.erreur ="Un nom d'élèvde doit être entré";
+      return ;
+    }
+    if(!this.dateDeRendu){
+      this.erreur ="Veuillez insérez une date";
+      return ;
+    }
+    if(!this.matiere){
+      this.erreur ="Veuillez sélectionner une matière";
+      return ;
+    }
+
     let newAssignment = new Assignment();
     newAssignment.id = Math.round(Math.random()*10000000);
     newAssignment.nom = this.nomAssignment;
@@ -39,6 +64,9 @@ export class AddAssignmentComponent implements OnInit {
     newAssignment.rendu = false;
     newAssignment.matiere = this.matiere;
     newAssignment.auteur = this.auteur;
+    if(this.authService.user){
+      newAssignment.createur = this.authService.user.pseudo;
+    }
     if(this.note) {
       newAssignment.rendu = true;
       newAssignment.note= this.note;
@@ -46,16 +74,13 @@ export class AddAssignmentComponent implements OnInit {
     if(this.remarques) {
       newAssignment.remarques = this.remarques;
     }
-    console.log("nom="+this.matiere.nom);
 
     this.assignmentsService.addAssignment(newAssignment)
     .subscribe(reponse => {
-      console.log(reponse.message);
-
       // il va falloir naviguer (demander au router) d'afficher à nouveau la liste
       // en gros, demander de naviguer vers /home
       this.router.navigate(["/home"]);
     })
-
   }
+
 }

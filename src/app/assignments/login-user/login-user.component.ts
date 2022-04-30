@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../shared/auth.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {User} from "../model/user.model";
 
 @Component({
@@ -9,17 +9,23 @@ import {User} from "../model/user.model";
   styleUrls: ['./login-user.component.css']
 })
 export class LoginUserComponent implements OnInit {
-  pseudo:string = "andry";
-  mdp:string = "andry";
+  /*pseudo?:string ;
+  mdp?:string ;*/
+  pseudo:string="andry" ;
+  mdp:string="andry" ;
   erreur?:string;
 
-  constructor(private authservice:AuthService, private router: Router) { }
+  constructor(private authservice:AuthService, private router: Router,private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.route.queryParams
+      .subscribe(params => {
+        this.erreur = params['erreur'];
+      });
   }
 
+
   seConnecter (){
-    console.log("Loggin : "+this.authservice.loggedIn);
     if(!this.pseudo || !this.mdp) {
       this.erreur="Des champs sont nuls";
       return ;

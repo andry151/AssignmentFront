@@ -6,6 +6,7 @@ import { Assignment } from './model/assignment.model';
 import {AuthService} from "../shared/auth.service";
 import {Router} from "@angular/router";
 import {User} from "./model/user.model";
+import {PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-assignments',
@@ -14,6 +15,8 @@ import {User} from "./model/user.model";
 })
 export class AssignmentsComponent implements OnInit, AfterViewInit {
   assignments:Assignment[] = [];
+  assignmentsRendu: Assignment[] = [];
+  assignmentsNonRendu: Assignment[] = [];
   displayedColumns: string[] = ['id', 'nom', 'dateDeRendu', 'rendu'];
   user?:User;
 
@@ -26,61 +29,29 @@ export class AssignmentsComponent implements OnInit, AfterViewInit {
   hasNextPage=true;
   prevPage= 1;
   nextPage= 2;
+  nbassignment!:number;
 
-  constructor(private assignmentsService:AssignmentsService, private ngZone: NgZone, private authService : AuthService, private router: Router) {}
+  constructor(private assignmentsService:AssignmentsService, private ngZone: NgZone, private authService : AuthService, private router: Router) {
+
+  }
 
   @ViewChild('scroller') scroller!: CdkVirtualScrollViewport;
 
   ngAfterViewInit():void{
-    this.scroller.elementScrolled().pipe(
-      tap(event => {
-        //console.log(event);
-      }),
-      map(event => {
-        return this.scroller.measureScrollOffset('bottom');
-      }),
-      tap(val => {
-        //console.log("distance par rapport à la fin = " + val)
-      }),
-      pairwise(),
-      tap(val => {
-        /*
-        if(val[0] < val[1]) console.log("on monte")
-        else console.log("on descend")
-        */
-      }),
-      filter(([y1, y2]) => (y2 < y1 && y2 < 140)),
-      tap(val => {
-        //console.log(val)
-      }),
-      throttleTime(200),
-      tap(val => {
-        //console.log(val);
-      })
-    ).subscribe(() => {
-      // ici traitement final
-      console.log("On va chercher de nouveaux assignments !")
-
-      // on le fait en tache de fond...
-      this.ngZone.run(() => {
-        this.page = this.nextPage;
-        this.getAssignmentsScrollInfini();
-      })
-    })
   }
 
-  // appelé après le constructeur et AVANT l'affichage du composant
   ngOnInit(): void {
-    console.log("Dans ngOnInit, appelé avant l'affichage");
     this.user=this.authService.user;
     this.getAssignments();
   }
 
+  onDetails(id:any){
+    this.router.navigate(['/assignment/'+id]);
+  }
+
   getAssignments() {
-      // demander les données au service de gestion des assignments...
       this.assignmentsService.getAssignments(this.page, this.limit)
       .subscribe(reponse => {
-        console.log("données arrivées");
         this.assignments = reponse.docs;
         this.page = reponse.page;
         this.limit=reponse.limit;
@@ -90,59 +61,40 @@ export class AssignmentsComponent implements OnInit, AfterViewInit {
         this.hasNextPage=reponse.hasNextPage;
         this.prevPage= reponse.prevPage;
         this.nextPage= reponse.nextPage;
+        for(var ass of reponse.docs){
+          if(ass.rendu ){
+            this.assignmentsRendu.push(ass);
+          }else{
+            this.assignmentsNonRendu.push(ass);
+          }
+        }
+        this.nbassignment=this.assignments.length;
       });
 
-      console.log("Après l'appel au service");
   }
 
-  getAssignmentsScrollInfini() {
-    // demander les données au service de gestion des assignments...
-    this.assignmentsService.getAssignments(this.page, this.limit)
-    .subscribe(reponse => {
-      console.log("données arrivées");
-      //this.assignments = reponse.docs;
-      // au lieu de remplacer les assignments chargés par les nouveaux, on les ajoute
-      this.assignments = this.assignments.concat(reponse.docs);
-
-      this.page = reponse.page;
-      this.limit=reponse.limit;
-      this.totalPages=reponse.totalPages;
-      this.pagingCounter=reponse.pagingCounter;
-      this.hasPrevPage=reponse.hasPrevPage;
-      this.hasNextPage=reponse.hasNextPage;
-      this.prevPage= reponse.prevPage;
-      this.nextPage= reponse.nextPage;
-    });
-
-    console.log("Après l'appel au service");
-}
-
-  pagePrecedente() {
-    this.page--;
-    this.getAssignments();
+  onchangePage(event:any) {
+    this.assignmentsNonRendu = [];
+    this.assignmentsRendu = [];
+    this.assignmentsService.getAssignments(event.pageIndex, event.pageSize)
+      .subscribe(reponse => {
+        this.page = reponse.page;
+        this.limit= reponse.limit;
+        this.totalPages=reponse.totalPages;
+        this.pagingCounter=reponse.pagingCounter;
+        this.hasPrevPage=reponse.hasPrevPage;
+        this.hasNextPage=reponse.hasNextPage;
+        this.prevPage= reponse.prevPage;
+        this.nextPage= reponse.nextPage;
+        this.assignments = reponse.docs;
+        for(var ass of this.assignments){
+          if(ass.rendu){
+            this.assignmentsRendu.push(ass);
+          }else{
+            this.assignmentsNonRendu.push(ass);
+          }
+        }
+      });
   }
 
-  pageSuivante() {
-    this.page++;
-    this.getAssignments();
-  }
-
-  premierePage() {
-    this.page = 1;
-    this.getAssignments();
-  }
-
-  dernierePage() {
-    this.page = this.totalPages;
-    this.getAssignments();
-  }
-
-  onLogout() {
-    if (this.authService.loggedIn) {
-      console.log('je me deloggue');
-      this.authService.logOut();
-      // et je navigue vers la page d'accueil
-      this.router.navigate(['/login']);
-    }
-  }
 }

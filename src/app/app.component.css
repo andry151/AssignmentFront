@@ -1,3 +1,13 @@
-.container {
-  
+#nav-contenu{
+  justify-content: space-between;
 }
+
+.menu-gauche{
+  justify-content: space-between;
+}
+.icon-men{
+  padding-bottom: 5px;
+}
+
+
+

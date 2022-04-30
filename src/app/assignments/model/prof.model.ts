@@ -1,6 +1,6 @@
 export class Prof {
   idprof!:number;
+  sexe!:string;
   nom!:string;
-  prenom!:string;
   photo!:string;
 }

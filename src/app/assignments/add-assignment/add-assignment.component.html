@@ -1,32 +1,51 @@
-<form ngForm #assignmentForm (submit)="onSubmit(); assignmentForm.reset()" class="form">
-  <mat-form-field>
-    <input matInput placeholder="Nom de l'assignment" [(ngModel)]="nomAssignment" name="nom" required>
-  </mat-form-field>
+<mat-card class="form-div">
+  <h1>Ajout d' assignment</h1>
+  <form ngForm #assignmentForm (submit)="onSubmit()" class="form">
 
-  <mat-form-field>
-    <input matInput placeholder="Nom de l'étudiant" [(ngModel)]="auteur" name="auteur" required>
-  </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Nom de l'assignment" [(ngModel)]="nomAssignment" name="nom" required>
+      <mat-icon matSuffix class="icon-fin">edit</mat-icon>
+    </mat-form-field>
 
-  <mat-form-field>
-    <input matInput placeholder="Note" [(ngModel)]="note" name="note" required>
-  </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Nom complet de l'étudiant" [(ngModel)]="auteur" name="auteur" required>
+      <mat-icon matSuffix class="icon-fin">perm_contact_calendar</mat-icon>
+    </mat-form-field>
 
-  <mat-form-field>
-    <input matInput placeholder="Remarques" [(ngModel)]="remarques" name="remarques" required>
-  </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Note" type="number" [(ngModel)]="note" name="note" class="note-eleve">
+      <mat-icon matSuffix class="icon-fin">description</mat-icon>
+    </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Choose a date</mat-label>
-    <input matInput [matDatepicker]="picker" [(ngModel)]="dateDeRendu" name="date" required>
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
+    <mat-form-field appearance="fill">
+      <mat-label>Choisissez une date</mat-label>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="dateDeRendu" name="date" required>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
 
-  </mat-form-field>
-  <select [(ngModel)]="matiere" name="matiere">
-    <option *ngFor="let mat of matieres" [ngValue]="mat" >{{mat.nom}} (Prof : {{mat.prof.nom}} {{mat.prof.prenom}} )</option>
-  </select>
+    <mat-form-field appearance="fill">
+      <mat-label>Selectionnez une matière</mat-label>
+      <mat-select disableRipple required [(ngModel)]="matiere" name="matiere">
+        <mat-option *ngFor="let mat of matieres" [value]="mat" >{{mat.nom}} (Prof : {{mat.prof.sexe}} {{mat.prof.nom}} )</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-    <button mat-stroked-button color="primary" [disabled]="((!this.nomAssignment) || (!this.dateDeRendu) || (!this.matiere))">
+    <mat-form-field appearance="fill">
+      <mat-label>Remarques</mat-label>
+      <textarea matInput [(ngModel)]="remarques" name="remarques"></textarea>
+      <mat-icon matSuffix class="icon-rem">insert_comment</mat-icon>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" [disabled]="((!this.nomAssignment) || (!this.auteur) || (!this.dateDeRendu) || (!this.matiere))">
       Ajouter un devoir
     </button>
-</form>
+    <br>
+
+    <mat-error class="er" *ngIf="erreur">
+      <strong>Erreur : </strong>{{erreur}}
+    </mat-error>
+  </form>
+
+
+</mat-card>

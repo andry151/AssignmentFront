@@ -23,17 +23,12 @@ export class AssignmentDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log("user = "+this.authService.user?.pseudo);
-    // on va récupérer l'id dans l'URL,
-    // le + permet de forcer en number (au lieu de string)
-    const id = +this.route.snapshot.params['id'];
+    const id = this.route.snapshot.params['id'];
     this.getAssignment(id);
 
   }
 
-  getAssignment(id: number) {
-    // on demande au service de gestion des assignment,
-    // l'assignment qui a cet id !
+  getAssignment(id: string) {
     this.assignmentsService.getAssignment(id).subscribe((assignment) => {
       this.assignmentTransmis = assignment;
     });
@@ -46,17 +41,13 @@ export class AssignmentDetailComponent implements OnInit {
       this.assignmentsService
         .updateAssignment(this.assignmentTransmis)
         .subscribe((reponse) => {
-          console.log(reponse.message);
-          // et on navigue vers la page d'accueil pour afficher la liste
           this.router.navigate(['/home']);
         });
     }
   }
 
   onDelete() {
-    console.log("mande");
     if (!this.assignmentTransmis) return;
-    console.log("mande2");
     if(this.authService.user){
       if (!this.authService.user.admin) {
         this.message ="vous n'êtes pas admin, vous n'êtes pas autorisé à supprimer";
@@ -64,26 +55,23 @@ export class AssignmentDetailComponent implements OnInit {
       }
 
     }
-    console.log("mande3");
 
     this.assignmentsService
       .deleteAssignment(this.assignmentTransmis)
       .subscribe((reponse) => {
         console.log(reponse.message);
-        // et on navigue vers la page d'accueil pour afficher la liste
         this.router.navigate(['/home']);
       });
   }
 
   onClickEdit() {
-    console.log("mande");
     if(this.authService.user){
       if (!this.authService.user.admin) {
         this.message ="vous n'êtes pas admin, vous n'êtes pas autorisé à modifier";
         return;
       }
     }
-    this.router.navigate(['/assignment', this.assignmentTransmis?.id, 'edit'], {
+    this.router.navigate(['/assignment', this.assignmentTransmis?._id, 'edit'], {
       queryParams: {
         name: 'Michel Buffa',
         job: 'Professeur',

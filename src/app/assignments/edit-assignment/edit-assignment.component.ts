@@ -19,6 +19,7 @@ export class EditAssignmentComponent implements OnInit {
   note!: number;
   matiere!: Matiere;
   matieres!:Matiere[];
+  erreur?:string;
 
   constructor(
     private assignmentsService: AssignmentsService,
@@ -40,16 +41,12 @@ export class EditAssignmentComponent implements OnInit {
   }
 
   getAssignment() {
-    // on récupère l'id dans le snapshot passé par le routeur
-    // le "+" force l'id de type string en "number"
-    const id = +this.route.snapshot.params['id'];
+    const id = this.route.snapshot.params['id'];
 
     this.assignmentsService.getAssignment(id).subscribe((assignment) => {
       if (!assignment) return;
 
       this.assignment = assignment;
-
-      // Pour pré-remplir le formulaire
       this.nomAssignment = assignment.nom;
       this.dateDeRendu = assignment.dateDeRendu;
       this.auteur = assignment.auteur;
@@ -61,8 +58,15 @@ export class EditAssignmentComponent implements OnInit {
 
   onSaveAssignment() {
     if (!this.assignment) return;
+    if(this.note<0){
+      this.erreur ="La note doit être supérieur à 0";
+      return;
+    }
+    if(this.note>20){
+      this.erreur ="La note doit être inférieur à 20";
+      return;
+    }
 
-    // on récupère les valeurs dans le formulaire
     this.assignment.nom = this.nomAssignment;
     this.assignment.dateDeRendu = this.dateDeRendu;
     this.assignment.auteur = this.auteur;
@@ -70,7 +74,6 @@ export class EditAssignmentComponent implements OnInit {
     {
       if (this.assignment.rendu === false) {
         this.assignment.rendu = true;
-        console.log("mande le true");
       }
       this.assignment.note = this.note;
     }
@@ -81,9 +84,6 @@ export class EditAssignmentComponent implements OnInit {
     this.assignmentsService
       .updateAssignment(this.assignment)
       .subscribe((reponse) => {
-        console.log(reponse.message);
-
-        // navigation vers la home page
         this.router.navigate(['/home']);
       });
   }

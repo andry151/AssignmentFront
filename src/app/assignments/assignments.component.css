@@ -1,3 +1,44 @@
+.assign-contain{
+  display: inline-block;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 10px;
+}
+
+.example-card {
+  max-width: 400px;
+  margin-bottom: 8px;
+  margin-left: 4px;
+  margin-right: 4px;
+  display: inline-block;
+  vertical-align: middle;
+  float: none;
+}
+
+.bann-img {
+  height: 250px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.img-profil{
+  width : 100px; height : 100px;
+  border: none;
+  -moz-border-radius : 75px;
+  -webkit-border-radius : 75px;
+  border-radius : 75px;
+}
+
+.pagin{
+  float: left;
+}
+
+.example-button-toggle-label {
+  display: inline-block;
+  margin: 16px;
+}
+
 .rendu {
   color:green;
 }
@@ -8,6 +49,9 @@
   border: 2px dashed orange;
 }
 
+.devoir-list{
+  text-align: center;
+}
 .container {
   display:flex;
   flex-direction: column;
@@ -34,3 +78,4 @@ table {
 .example-item {
   height: 150px;
 }
+

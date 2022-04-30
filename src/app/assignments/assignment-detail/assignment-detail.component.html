@@ -1,7 +1,7 @@
 <mat-card class="example-card" *ngIf="assignmentTransmis">
   <img mat-card-image class="bann-img" src="{{assignmentTransmis.matiere.image}}">
   <mat-card-title-group>
-    <mat-card-title>{{assignmentTransmis.nom}} ({{assignmentTransmis.matiere.nom}}) : {{assignmentTransmis.matiere.prof.nom}}</mat-card-title>
+    <mat-card-title>{{assignmentTransmis.nom}} ({{assignmentTransmis.matiere.nom}}) : {{assignmentTransmis.matiere.prof.sexe}} {{assignmentTransmis.matiere.prof.nom}}</mat-card-title>
     <mat-card-subtitle>{{assignmentTransmis.dateDeRendu | date:"dd/MM/yy"}}</mat-card-subtitle>
     <img mat-card-sm-image class="img-profil" src="{{assignmentTransmis.matiere.prof.photo}}" >
   </mat-card-title-group>
@@ -22,8 +22,10 @@
     </p>
     <p>
       <strong>Ajouté par : </strong>
-      <span *ngIf="!testAdmin(); else testadmin"  id="adminTest">Seule l'admin peut voir qui a créé ce devoir</span>
-      <ng-template #testadmin>Andry</ng-template>
+      <span *ngIf="testAdmin(); else testadmin" >{{assignmentTransmis.createur}}</span>
+      <ng-template #testadmin>
+        <span id="adminTest">Seule l'admin peut voir qui a créé ce devoir</span>
+      </ng-template>
     </p>
     <p>
       <strong>Remarques : </strong>

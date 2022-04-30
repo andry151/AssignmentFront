@@ -6,6 +6,7 @@ export class Assignment {
   nom!:string;
   dateDeRendu!:Date;
   rendu!:boolean;
+  createur!:string;
   auteur!:string;
   note!:number;
   remarques!:string;

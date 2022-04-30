@@ -1,13 +1,30 @@
-<div class="container">
-  <h1>
-    <nav>
-      <a routerLink="/home">{{titre}}</a>
-    </nav>
-  </h1>
-  <br>
-  <!--
-  <button mat-button color="primary" (click)="genererDonneesDeTest()">Peupler BD avec données de test</button>
-  -->
-</div>
+<mat-toolbar color="primary" id="nav-contenu">
+    <div>
+      <span>
+
+        <img src="" class="angular-logo">
+        Application de gestion d'Assignment
+      </span>
+    </div>
+
+    <div class="menu-gauche">
+      <span class="fill-remaining-space"></span>
+      <span ><button mat-button (click)="onHome()"><mat-icon aria-hidden="false" class="icon-men">home</mat-icon> Accueil</button></span>
+      <span ><button mat-button (click)="onAdd()"><mat-icon aria-hidden="false" class="icon-men">note_add</mat-icon> Ajout d'assignment</button></span>
+      <span *ngIf="isLogged(); else nonconnect">
+
+        <span *ngIf="user">
+          <button mat-button><mat-icon aria-hidden="false" class="icon-men">person</mat-icon>azeaze{{user.pseudo}}</button>
+        </span>
+
+        <button mat-button (click)="onLogout()">Déconnexion</button>
+
+        <!--<mat-icon>verified_user</mat-icon>
+        	<mat-icon>check_circle</mat-icon>
+        <button mat-button (click)="onLogout()">Logout</button>-->
+      </span>
+      <ng-template #nonconnect><button mat-button><mat-icon aria-hidden="false" class="icon-men">person</mat-icon> Non connecté</button></ng-template>
+    </div>
+</mat-toolbar>
 
 <router-outlet></router-outlet>

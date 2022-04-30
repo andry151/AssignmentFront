@@ -3,3 +3,33 @@
   flex-direction: column;
   margin:5px;
 }
+
+.form-div {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  text-align: center;
+}
+
+.icon-fin{
+  padding-right: 20px;
+}
+
+.icon-rem{
+  padding-right: 9px;
+}
+
+.er{
+  text-align: left;
+}
+
+input.note-eleve::-webkit-outer-spin-button,
+input.note-eleve::-webkit-inner-spin-button {
+  display: none;
+}
+input.note-eleve {
+  -moz-appearance: textfield;
+}
+
+
