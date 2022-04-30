@@ -44,7 +44,7 @@ export class LoginUserComponent implements OnInit {
   }
 
   matieresPeuple(){
-    this.ass.peuplerBD();
+    this.ass.peuplerMatiere();
   }
 
 }

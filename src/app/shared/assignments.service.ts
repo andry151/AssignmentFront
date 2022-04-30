@@ -101,8 +101,8 @@ export class AssignmentsService {
 
   }
 
-  url = "http://localhost:8010/api/assignments";
-  //url= "https://mbdsmadagascar2022api.herokuapp.com/api/assignments";
+  //url = "http://localhost:8010/api/assignments";
+  url= "https://assignments2022back.herokuapp.com/api/assignments";
 
   getAssignments(page:number, limit:number):Observable<any> {
     // en réalité, bientôt au lieu de renvoyer un tableau codé en dur,
@@ -142,10 +142,7 @@ export class AssignmentsService {
     this.loggingService.log(assignment.nom, "ajouté");
     return this.http.post<Assignment>(this.url, assignment);
   }
-  url2:string= "http://localhost:8010/api/matieres";
-  addMatiere(mat:Matiere):Observable<any> {
-    return this.http.post<Matiere>(this.url2, mat);
-  }
+
 
   updateAssignment(assignment:Assignment):Observable<any> {
     this.loggingService.log(assignment.nom, "modifié");
@@ -158,6 +155,11 @@ export class AssignmentsService {
     //this.loggingService.log(assignment.nom, "supprimé");
     //return of("Assignment supprimé");
     return this.http.delete(this.url + "/" + assignment._id);
+  }
+
+  url2:string= "http://localhost:8010/api/matieres";
+  addMatiere(mat:Matiere):Observable<any> {
+    return this.http.post<Matiere>(this.url2, mat);
   }
 
   peuplerMatiere(){
@@ -173,7 +175,7 @@ export class AssignmentsService {
   }
 
   getUsers():Observable<User[]> {
-    return this.http.get<User[]>("http://localhost:8010/api/users");
+    return this.http.get<User[]>("https://assignments2022back.herokuapp.com/api/users");
   }
 
   peuplerBD() {
@@ -205,34 +207,6 @@ export class AssignmentsService {
     })
   }
 
-  DeleteBD() {
-    /*
-    Apina : createur(pseudo zany), matiere, de random rendu de ra oui de asina note /20
-     */
-    bdInitialAssignments.forEach(a => {
-      let newAssignment = new Assignment();
-      newAssignment.id = a.id;
-      newAssignment.dateDeRendu = new Date(a.dateDeRendu);
-      newAssignment.nom = a.nom;
-      newAssignment.auteur = a.auteur;
-      newAssignment.remarques = a.remarques;
-      if((Math.random() < 0.5)){
-        newAssignment.rendu = true;
-        newAssignment.note=Math.floor(Math.random() * (20 - 0) + 0)
-      }else{
-        newAssignment.rendu = false;
-      }
-      let pseudos = ['ituadmin', 'itu1', 'itu7', 'itu1987', 'itu427', 'itu23091'];
-      let pseudo = pseudos[Math.floor(Math.random() * pseudos.length)];
-      newAssignment.createur = pseudo ;
-      let mati = this.matieres[Math.floor(Math.random() * this.matieres.length)];
-      newAssignment.matiere = mati;
-      this.addAssignment(newAssignment)
-        .subscribe(reponse => {
-          console.log(reponse.message);
-        })
-    })
-  }
 
   peuplerBDAvecForkJoin(): Observable<any> {
     const appelsVersAddAssignment:any = [];

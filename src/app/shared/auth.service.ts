@@ -10,10 +10,11 @@ export class AuthService {
   user?:User;
   loggedIn = false;
 
+
   constructor(private http:HttpClient) { }
 
   getUsers():Observable<User[]> {
-    return this.http.get<User[]>("http://localhost:8010/api/users");
+    return this.http.get<User[]>("https://assignments2022back.herokuapp.com/api/users");
   }
 
   logOut() {
