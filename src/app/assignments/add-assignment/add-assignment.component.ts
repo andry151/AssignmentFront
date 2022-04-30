@@ -12,9 +12,9 @@ import {Matiere} from "../model/matiere.model";
 })
 export class AddAssignmentComponent implements OnInit {
   // Champ de formulaire
-  nomAssignment: string = "Test";
-  dateDeRendu: Date = new Date("2022-01-01");
-  auteur: string = "Andry";
+  nomAssignment!: string;
+  dateDeRendu!: Date ;
+  auteur!:string;
   note!: number ;
   remarques!: string ;
   matiere!:Matiere;

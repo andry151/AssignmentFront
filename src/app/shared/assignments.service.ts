@@ -6,6 +6,7 @@ import { LoggingService } from './logging.service';
 import { bdInitialAssignments } from './data';
 import {Matiere} from "../assignments/model/matiere.model";
 import {Prof} from "../assignments/model/prof.model";
+import {User} from "../assignments/model/user.model";
 
 @Injectable({
   providedIn: 'root'
@@ -16,48 +17,83 @@ export class AssignmentsService {
   matieres:Matiere[] = [
     {
       idmatiere:1,
-      nom:"Base de données",
-      image:"https://miro.medium.com/max/1100/1*dYhDHdCt0lhVRdj0IjrI7A.png",
+      nom:"Angular",
+      image:"/assets/matiere/angular.png",
       prof:{
         idprof:1,
         sexe:"Mr",
-        nom:"Buffa",
-        photo:"https://material.angular.io/assets/img/examples/shiba2.jpg",
+        nom:"Michel Buffa",
+        photo:"/assets/prof/buffa.jpg",
       }
     },
     {
       idmatiere:2,
-      nom:"Technologies Web",
-      image:"https://miro.medium.com/max/1100/1*dYhDHdCt0lhVRdj0IjrI7A.png",
+      nom:"SQL3",
+      image:"/assets/matiere/sql3.jpg",
       prof:{
         idprof:2,
         sexe:"Mr",
-        nom:"Buffa",
-        photo:"https://material.angular.io/assets/img/examples/shiba2.jpg",
+        nom:"Serge Miranda",
+        photo:"/assets/prof/Miranda.jpg",
       }
     },
     {
       idmatiere:3,
       nom:"Grails",
-      image:"https://miro.medium.com/max/1100/1*dYhDHdCt0lhVRdj0IjrI7A.png",
+      image:"/assets/matiere/grails.jpg",
       prof:{
         idprof:3,
         sexe:"Mr",
-        nom:"Sammy",
-        photo:"https://material.angular.io/assets/img/examples/shiba2.jpg",
+        nom:"Grégory Galli",
+        photo:"/assets/prof/Galli.jpg",
       }
     },
     {
-      idmatiere:3,
-      nom:"Oracle",
-      image:"https://mma.prnewswire.com/media/467598/Oracle_Logo.jpg?p=twitter",
+      idmatiere:4,
+      nom:"Ingéniorie logicielle",
+      image:"/assets/matiere/ing-logiciel.PNG",
       prof:{
-        idprof:3,
+        idprof:4,
+        sexe:"Mme",
+        nom:"Dominique RIBOUCHON",
+        photo:"/assets/prof/ribouchon.PNG",
+      }
+    },
+    {
+      idmatiere:5,
+      nom:"Langage R",
+      image:"/assets/matiere/R.PNG",
+      prof:{
+        idprof:5,
         sexe:"Mr",
-        nom:"Mopollo",
-        photo:"https://univ-cotedazur.fr/medias/photo/rs9100-buffa-michel-scr_1623769953324-jpg?ID_FICHE=1094906",
+        nom:"Nicolas Pasquier",
+        photo:"/assets/prof/Pasquier.jpg",
+      }
+    },
+    {
+      idmatiere:6,
+      nom:"Oracle",
+      image:"/assets/matiere/oracle.gif",
+      prof:{
+        idprof:6,
+        sexe:"Mr",
+        nom:"Gabriel MOPOLO-MOKE",
+        photo:"/assets/prof/Mopolo.jpg",
+      }
+    },
+    {
+      idmatiere:7,
+      nom:"NodeJs",
+      image:"/assets/matiere/nodejs.png",
+      prof:{
+        idprof:7,
+        sexe:"Mr",
+        nom:"Rojo Rabenanahary",
+        photo:"/assets/prof/raben.jpg",
       }
     }
+
+
   ];
 
   constructor(private loggingService:LoggingService, private http:HttpClient) {
@@ -106,6 +142,10 @@ export class AssignmentsService {
     this.loggingService.log(assignment.nom, "ajouté");
     return this.http.post<Assignment>(this.url, assignment);
   }
+  url2:string= "http://localhost:8010/api/matieres";
+  addMatiere(mat:Matiere):Observable<any> {
+    return this.http.post<Matiere>(this.url2, mat);
+  }
 
   updateAssignment(assignment:Assignment):Observable<any> {
     this.loggingService.log(assignment.nom, "modifié");
@@ -120,18 +160,77 @@ export class AssignmentsService {
     return this.http.delete(this.url + "/" + assignment._id);
   }
 
+  peuplerMatiere(){
+    this.matieres.forEach(a => {
+      let mat = new Matiere();
+      mat = a;
+
+      this.addMatiere(mat)
+        .subscribe(reponse => {
+          console.log(reponse.message);
+        })
+    })
+  }
+
+  getUsers():Observable<User[]> {
+    return this.http.get<User[]>("http://localhost:8010/api/users");
+  }
+
   peuplerBD() {
+    /*
+    Apina : createur(pseudo zany), matiere, de random rendu de ra oui de asina note /20
+     */
     bdInitialAssignments.forEach(a => {
       let newAssignment = new Assignment();
-      newAssignment.nom = a.nom;
-      newAssignment.dateDeRendu = new Date(a.dateDeRendu);
-      newAssignment.rendu = a.rendu;
       newAssignment.id = a.id;
-
+      newAssignment.dateDeRendu = new Date(a.dateDeRendu);
+      newAssignment.nom = a.nom;
+      newAssignment.auteur = a.auteur;
+      newAssignment.remarques = a.remarques;
+      if((Math.random() < 0.5)){
+        newAssignment.rendu = true;
+        newAssignment.note=Math.floor(Math.random() * (20 - 0) + 0)
+      }else{
+        newAssignment.rendu = false;
+      }
+      let pseudos = ['ituadmin', 'itu1', 'itu7', 'itu1987', 'itu427', 'itu23091'];
+      let pseudo = pseudos[Math.floor(Math.random() * pseudos.length)];
+      newAssignment.createur = pseudo ;
+      let mati = this.matieres[Math.floor(Math.random() * this.matieres.length)];
+      newAssignment.matiere = mati;
       this.addAssignment(newAssignment)
       .subscribe(reponse => {
         console.log(reponse.message);
       })
+    })
+  }
+
+  DeleteBD() {
+    /*
+    Apina : createur(pseudo zany), matiere, de random rendu de ra oui de asina note /20
+     */
+    bdInitialAssignments.forEach(a => {
+      let newAssignment = new Assignment();
+      newAssignment.id = a.id;
+      newAssignment.dateDeRendu = new Date(a.dateDeRendu);
+      newAssignment.nom = a.nom;
+      newAssignment.auteur = a.auteur;
+      newAssignment.remarques = a.remarques;
+      if((Math.random() < 0.5)){
+        newAssignment.rendu = true;
+        newAssignment.note=Math.floor(Math.random() * (20 - 0) + 0)
+      }else{
+        newAssignment.rendu = false;
+      }
+      let pseudos = ['ituadmin', 'itu1', 'itu7', 'itu1987', 'itu427', 'itu23091'];
+      let pseudo = pseudos[Math.floor(Math.random() * pseudos.length)];
+      newAssignment.createur = pseudo ;
+      let mati = this.matieres[Math.floor(Math.random() * this.matieres.length)];
+      newAssignment.matiere = mati;
+      this.addAssignment(newAssignment)
+        .subscribe(reponse => {
+          console.log(reponse.message);
+        })
     })
   }
 
@@ -144,7 +243,6 @@ export class AssignmentsService {
       nouvelAssignment.id = a.id;
       nouvelAssignment.nom = a.nom;
       nouvelAssignment.dateDeRendu = new Date(a.dateDeRendu);
-      nouvelAssignment.rendu = a.rendu;
 
       appelsVersAddAssignment.push(this.addAssignment(nouvelAssignment));
     });

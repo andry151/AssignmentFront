@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../shared/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {User} from "../model/user.model";
+import {AssignmentsService} from "../../shared/assignments.service";
 
 @Component({
   selector: 'app-login-user',
@@ -11,11 +12,11 @@ import {User} from "../model/user.model";
 export class LoginUserComponent implements OnInit {
   /*pseudo?:string ;
   mdp?:string ;*/
-  pseudo:string="andry" ;
-  mdp:string="andry" ;
+  pseudo:string="ituadmin" ;
+  mdp:string="ituadmin" ;
   erreur?:string;
 
-  constructor(private authservice:AuthService, private router: Router,private route: ActivatedRoute) { }
+  constructor(private authservice:AuthService, private router: Router,private route: ActivatedRoute, private ass: AssignmentsService) { }
 
   ngOnInit(): void {
     this.route.queryParams
@@ -23,7 +24,6 @@ export class LoginUserComponent implements OnInit {
         this.erreur = params['erreur'];
       });
   }
-
 
   seConnecter (){
     if(!this.pseudo || !this.mdp) {
@@ -41,6 +41,10 @@ export class LoginUserComponent implements OnInit {
       }
       this.erreur="login incorrect ";
     });
+  }
+
+  matieresPeuple(){
+    this.ass.peuplerBD();
   }
 
 }

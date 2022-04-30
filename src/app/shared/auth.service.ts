@@ -9,15 +9,6 @@ import {Assignment} from "../assignments/model/assignment.model";
 export class AuthService {
   user?:User;
   loggedIn = false;
-  users:User[] =  [
-    {
-      _id : "aaze",
-      iduser : 1,
-      pseudo : "andry",
-      mdp : "andry",
-      admin : true,
-    },
-  ];
 
   constructor(private http:HttpClient) { }
 

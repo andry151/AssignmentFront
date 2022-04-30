@@ -18,7 +18,7 @@
       <strong>Note : </strong> <span *ngIf="assignmentTransmis.note; else nr">{{assignmentTransmis.note}}</span><ng-template #nr>Pas encore de note</ng-template>
     </p>
     <p>
-      <strong>Rendu : </strong> <span *ngIf="assignmentTransmis.rendu; else rendu">Devoir rendu</span><ng-template #rendu>Pas encore rendu</ng-template>
+      <strong>Statut: </strong> <span *ngIf="assignmentTransmis.rendu; else rendu">Devoir rendu</span><ng-template #rendu>Pas encore rendu</ng-template>
     </p>
     <p>
       <strong>Ajouté par : </strong>
