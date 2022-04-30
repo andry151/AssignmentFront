@@ -14,87 +14,7 @@ import {User} from "../assignments/model/user.model";
 
 export class AssignmentsService {
   assignments:Assignment[] = [];
-  matieres:Matiere[] = [
-    {
-      idmatiere:1,
-      nom:"Angular",
-      image:"/assets/matiere/angular.png",
-      prof:{
-        idprof:1,
-        sexe:"Mr",
-        nom:"Michel Buffa",
-        photo:"/assets/prof/buffa.jpg",
-      }
-    },
-    {
-      idmatiere:2,
-      nom:"SQL3",
-      image:"/assets/matiere/sql3.jpg",
-      prof:{
-        idprof:2,
-        sexe:"Mr",
-        nom:"Serge Miranda",
-        photo:"/assets/prof/Miranda.jpg",
-      }
-    },
-    {
-      idmatiere:3,
-      nom:"Grails",
-      image:"/assets/matiere/grails.jpg",
-      prof:{
-        idprof:3,
-        sexe:"Mr",
-        nom:"Grégory Galli",
-        photo:"/assets/prof/Galli.jpg",
-      }
-    },
-    {
-      idmatiere:4,
-      nom:"Ingéniorie logicielle",
-      image:"/assets/matiere/ing-logiciel.PNG",
-      prof:{
-        idprof:4,
-        sexe:"Mme",
-        nom:"Dominique RIBOUCHON",
-        photo:"/assets/prof/ribouchon.PNG",
-      }
-    },
-    {
-      idmatiere:5,
-      nom:"Langage R",
-      image:"/assets/matiere/R.PNG",
-      prof:{
-        idprof:5,
-        sexe:"Mr",
-        nom:"Nicolas Pasquier",
-        photo:"/assets/prof/Pasquier.jpg",
-      }
-    },
-    {
-      idmatiere:6,
-      nom:"Oracle",
-      image:"/assets/matiere/oracle.gif",
-      prof:{
-        idprof:6,
-        sexe:"Mr",
-        nom:"Gabriel MOPOLO-MOKE",
-        photo:"/assets/prof/Mopolo.jpg",
-      }
-    },
-    {
-      idmatiere:7,
-      nom:"NodeJs",
-      image:"/assets/matiere/nodejs.png",
-      prof:{
-        idprof:7,
-        sexe:"Mr",
-        nom:"Rojo Rabenanahary",
-        photo:"/assets/prof/raben.jpg",
-      }
-    }
-
-
-  ];
+  matieres:Matiere[] = [];
 
   constructor(private loggingService:LoggingService, private http:HttpClient) {
     this.loggingService.setNiveauTrace(2);
@@ -105,12 +25,11 @@ export class AssignmentsService {
   url= "https://assignments2022back.herokuapp.com/api/assignments";
 
   getAssignments(page:number, limit:number):Observable<any> {
-    // en réalité, bientôt au lieu de renvoyer un tableau codé en dur,
-    // on va envoyer une requête à un Web Service sur le cloud, qui mettra un
-    // certain temps à répondre. On va donc préparer le terrain en renvoyant
-    // non pas directement les données, mais en renvoyant un objet "Observable"
-    //return of(this.assignments);
     return this.http.get<Assignment[]>(this.url + "?page=" + page + "&limit=" + limit);
+  }
+
+  getMatieres():Observable<any> {
+    return this.http.get<Matiere[]>("https://assignments2022back.herokuapp.com/api/matieres");
   }
 
   getAssignment(id:string):Observable<Assignment|undefined> {
@@ -150,10 +69,6 @@ export class AssignmentsService {
   }
 
   deleteAssignment(assignment:Assignment):Observable<any> {
-    //let pos = this.assignments.indexOf(assignment);
-    //this.assignments.splice(pos, 1);
-    //this.loggingService.log(assignment.nom, "supprimé");
-    //return of("Assignment supprimé");
     return this.http.delete(this.url + "/" + assignment._id);
   }
 
@@ -179,9 +94,7 @@ export class AssignmentsService {
   }
 
   peuplerBD() {
-    /*
-    Apina : createur(pseudo zany), matiere, de random rendu de ra oui de asina note /20
-     */
+
     bdInitialAssignments.forEach(a => {
       let newAssignment = new Assignment();
       newAssignment.id = a.id;
